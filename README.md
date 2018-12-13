@@ -32,3 +32,17 @@ Imagine the following nextd.json:
 * **user** The username to use for the SSH connection.
 * **privateKey** The private key file for your SSH user.
 * **remoteDirectory** The absolute path on the server where you want to run the app.
+
+### Usage
+```bash
+Usage: nextd [options] [command]
+
+  Commands:
+    deploy                 Deploys the git repository to a remote server.
+
+  Options:
+
+    -h, --help           output usage information
+    -V, --version        output the version number
+    -f, --forever        Attempt to start/restart the program on the server using forever.
+```
