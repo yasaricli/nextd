@@ -1,0 +1,13 @@
+{
+  "name": "nextd",
+  "version": "0.0.1",
+  "author": "Frontekip <hi@frontekip.com>",
+  "license": "MIT",
+  "bin": {
+    "nextd": "./bin/nextd"
+  },
+  "dependencies": {
+    "node-ssh": "^5.1.2",
+    "underscore": "^1.9.1"
+  }
+}
