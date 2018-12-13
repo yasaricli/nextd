@@ -1,9 +1,8 @@
-# nextd
-> Next.js uygulamalarınızı kendi özel sunucuya deploy edin!
-
 <div align="center">
-  <img src="images/nextd.png">
+  <img width="200" src="images/nextd.png">
 </div>
+
+> Next.js uygulamalarınızı kendi özel sunucuya deploy edin!
 
 ## Install
 
