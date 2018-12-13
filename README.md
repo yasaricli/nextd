@@ -16,6 +16,7 @@ Use -g flag to use nextd via the CLI
 
 Imagine the following nextd.json:
 
+    nextd --init
 
 ``` JS
 {
