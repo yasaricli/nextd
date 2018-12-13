@@ -1,5 +1,30 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --harmony
+const program = require('commander'),
+      colors = require('colors');
+      pack = require('../package.json');
+
+      
+// scripts
 const deploy = require('../scripts/deploy');
 
-// deploy
-deploy();
+program
+  .option('-d, --deploy', 'Deploys the git repository to a remote server.')
+  .option('-i, --init', 'This will generate a sample, nextd.json.')
+  .version(pack.version)
+  .on('--help', function(){
+    console.log('')
+    console.log('Examples:');
+    console.log('  $ nextd --deploy');
+    console.log('  $ nextd -h');
+  }).parse(process.argv);
+
+
+// deploy...
+if (program.deploy) {
+  deploy();
+}
+
+// empty options
+if (!process.argv.slice(2).length) {
+  program.outputHelp((txt) => colors.red(txt));
+}
