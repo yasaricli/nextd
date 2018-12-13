@@ -4,11 +4,13 @@
 
 > Next.js uygulamalarınızı kendi özel sunucuya deploy edin!
 
-## Install
+## Installation
 
 ```
 $ npm install -g nextd
 ```
+
+Use -g flag to use nextd via the CLI
 
 ## Usage
 
