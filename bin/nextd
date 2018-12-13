@@ -3,10 +3,6 @@ const program = require('commander'),
       colors = require('colors');
       pack = require('../package.json');
 
-      
-// scripts
-const deploy = require('../scripts/deploy');
-
 program
   .option('-d, --deploy', 'Deploys the git repository to a remote server.')
   .option('-i, --init', 'This will generate a sample, nextd.json.')
@@ -19,12 +15,20 @@ program
   }).parse(process.argv);
 
 
-// deploy...
-if (program.deploy) {
-  deploy();
-}
+(() => {
+  // deploy...
+  if (program.deploy) {
+    const deploy = require('../scripts/deploy');
+    return deploy();
+  }
 
-// empty options
-if (!process.argv.slice(2).length) {
-  program.outputHelp((txt) => colors.red(txt));
-}
+  if (program.init) {
+    const init = require('../scripts/init');
+    return init();
+  }
+
+  // empty options
+  if (!process.argv.slice(2).length) {
+    program.outputHelp((txt) => colors.red(txt));
+  }
+})();

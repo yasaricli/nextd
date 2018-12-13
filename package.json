@@ -9,6 +9,7 @@
   "dependencies": {
     "colors": "^1.3.3",
     "commander": "^2.19.0",
+    "fs-extra": "^7.0.1",
     "node-ssh": "^5.1.2",
     "underscore": "^1.9.1"
   }

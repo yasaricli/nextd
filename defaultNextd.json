@@ -1,0 +1,7 @@
+{
+  "name": "App name",
+  "host": "0.0.0.0",
+  "username": "ubuntu",
+  "privateKey": "/Users/user/Desktop/kalekim.pem",
+  "remoteDirectory": "/home/ubuntu/app"
+}
