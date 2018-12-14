@@ -11,7 +11,8 @@ const {
   install,
   start,
   restart,
-  stop
+  stop,
+  generateIndexFile
 } = require('./utils/execCommands');
 
 module.exports = () => {
@@ -21,6 +22,7 @@ module.exports = () => {
   spinner.start('Deploying own server');
 
   return connect((ssh) => {
+
     return ssh.putDirectory(config.localDirectory, config.remoteDirectory, {
       recursive: true,
       validate,
@@ -40,18 +42,21 @@ module.exports = () => {
           spinner.succeed('Npm packages install successful!');
           spinner.start('Stoped your application...');
 
-          // StopAll
-          stop(ssh).then(() => {
-            spinner.succeed('Stoped successful!');
-            spinner.start('Starting application');
+          generateIndexFile(ssh).then(() => {
 
-            // start
-            start(ssh).then((startResult) => {
+            // StopAll
+            stop(ssh).then(() => {
+              spinner.succeed('Stoped successful!');
+              spinner.start('Starting application');
 
-              spinner.succeed('Started successful!');
-              spinner.stop();
-              
-              return ssh.dispose();
+              // start
+              start(ssh).then((startResult) => {
+
+                spinner.succeed('Started successful!');
+                spinner.stop();
+
+                return ssh.dispose();
+              })
             })
           })
         })

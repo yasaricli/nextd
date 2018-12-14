@@ -14,7 +14,7 @@ function Commands() {
   }
 
   this.start = (ssh) => {
-    return this.execCommand(ssh, this.forever(`start --uid ${config.name} -a index.js`));
+    return this.execCommand(ssh, this.forever(`start --uid ${config.name} -a ${config.name}.js`));
   }
 
   this.restart = (ssh) => {
@@ -30,6 +30,32 @@ function Commands() {
       console.log(result.stdout);
       console.log(result.stderr);
     })
+  }
+
+  this.generateIndexFile = (ssh) => {
+    const file = `
+      const { createServer } = require('http');
+      const { parse } = require('url');
+      const next = require('next');
+
+      const app = next({ dev: false });
+      const handle = app.getRequestHandler();
+
+      app.prepare().then(() => {
+        return createServer((req, res) => {
+          const parsedUrl = parse(req.url, true);
+
+          return handle(req, res, parsedUrl);
+        }).listen(${config.port}, err => {
+          if (err) throw err
+          console.log('> Ready ${config.name} on http://localhost:${config.port}');
+        })
+      })
+    `;
+
+    return ssh.execCommand(`echo -n "${file}" > ${config.name}.js`, {
+      cwd: config.remoteDirectory
+    });
   }
 }
 

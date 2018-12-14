@@ -8,6 +8,7 @@ const localDirectory = path.resolve("./");
 module.exports = _.defaults(require(`${localDirectory}/nextd.json`), {
   name: null,
   host: null,
+  port: 3000,
   username: null,
   privateKey: null,
   remoteDirectory: null,

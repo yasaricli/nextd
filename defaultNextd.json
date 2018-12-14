@@ -2,6 +2,7 @@
   "name": "App name",
   "host": "0.0.0.0",
   "username": "ubuntu",
+  "port": "3000",
   "privateKey": "/Users/user/Desktop/kalekim.pem",
   "remoteDirectory": "/home/ubuntu/app"
 }
