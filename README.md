@@ -38,6 +38,8 @@ Builds your app, using nextd deploy
 * Runs the start script
 * Verifies that the app sucessfully started
 
+**Congratulations! Your app is now running on the server, accessible to your potential users!**
+
 #### Standard options
 * **name** The application name.
 * **host** The server you want to deploy to. Has to have an SSH server with SFTP subsystem.
