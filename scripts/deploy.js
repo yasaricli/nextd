@@ -1,6 +1,7 @@
+const ora = require('ora');
+
 // putDirectory Option functions.
 const validate = require('./utils/validate');
-      tick = require('./utils/tick');
 
 const connect = require('./utils/connect'),
       config = require('./utils/config');
@@ -9,35 +10,47 @@ const connect = require('./utils/connect'),
 const {
   install,
   start,
-  restartAll,
-  stopAll
+  restart,
+  stop
 } = require('./utils/execCommands');
 
 module.exports = () => {
+  const spinner = ora();
+
+  // start
+  spinner.start('Deploying own server');
+
   return connect((ssh) => {
     return ssh.putDirectory(config.localDirectory, config.remoteDirectory, {
       recursive: true,
       validate,
-      tick
+      tick(localPath, remotePath, error) {
+        spinner.text = `sending ${localPath} file`;
+      }
     }).then((status) => {
       if (status) {
-        console.log('the directory transfer was successful!');
+
+        // success
+        spinner.succeed('The project transfer was successful!');
+        spinner.start('Installing npm packages');
 
         // install and start
         install(ssh).then((installResult) => {
 
-          console.log('STDOUT: ' + installResult.stdout)
-          console.log('STDERR: ' + installResult.stderr)
+          spinner.succeed('Npm packages install successful!');
+          spinner.start('Stoped your application...');
 
           // StopAll
-          stopAll(ssh).then(() => {
+          stop(ssh).then(() => {
+            spinner.succeed('Stoped successful!');
+            spinner.start('Starting application');
 
             // start
             start(ssh).then((startResult) => {
 
-              console.log('STDOUT: ' + startResult.stdout)
-              console.log('STDERR: ' + startResult.stderr)
-
+              spinner.succeed('Started successful!');
+              spinner.stop();
+              
               return ssh.dispose();
             })
           })
