@@ -1,6 +1,7 @@
 const ora = require('ora');
 
 const connect = require('./utils/connect'),
+      commands = require('./utils/execCommands'),
       config = require('./utils/config');
 
 module.exports = (name) => {
@@ -9,7 +10,6 @@ module.exports = (name) => {
   spinner.start('Connection to your server...');
 
   return connect((ssh) => {
-    const commands = require('./utils/execCommands');
 
     spinner.succeed('Connection successful!');
     spinner.start(`Run ${name} command..`);

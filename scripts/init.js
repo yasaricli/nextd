@@ -7,6 +7,12 @@ const localDirectory = path.resolve("./");
 
 module.exports = () => {
   fs.copy(path.resolve(__dirname, '../defaultNextd.json'), `${localDirectory}/nextd.json`).then(() => {
-    return console.log(colors.yellow('Successfully nextd.json file created.\n'));
+    return console.log(colors.yellow(`
+  Successfully nextd.json file created.
+
+  Please following command:
+
+  $ nextd --deploy
+    `));
   })
 }

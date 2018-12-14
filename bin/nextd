@@ -1,12 +1,17 @@
 #!/usr/bin/env node --harmony
-const program = require('commander'),
+const path = require('path'),
+      shell = require('shelljs'),
+      program = require('commander'),
       colors = require('colors');
       pack = require('../package.json');
+
+// local dir.
+const localDirectory = path.resolve("./");
 
 program
   .option('-d, --deploy', 'Deploys the git repository to a remote server.')
   .option('-i, --init', 'This will generate a sample, nextd.json.')
-  .option('-f, --forever <command>', 'Attempt to (start|restart|stopall) the program on the server using forever.', 'forever')
+  .option('-f, --forever <command>', 'Attempt to (start|restart|stopall|logs|list) the program on the server using forever.', 'forever')
   .version(pack.version)
   .on('--help', function(){
     console.log('')
@@ -15,23 +20,32 @@ program
     console.log('  $ nextd -h');
   }).parse(process.argv);
 
-
 (() => {
-  // deploy...
-  if (program.deploy) {
-    const deploy = require('../scripts/deploy');
-    return deploy();
+
+  if (shell.test('-f', `${localDirectory}/nextd.json`)) {
+    if (program.deploy) {
+      const deploy = require('../scripts/deploy');
+      return deploy();
+    }
+
+    if (program.init) {
+      const init = require('../scripts/init');
+      return init();
+    }
+
+    if (program.forever) {
+      const run = require('../scripts/run');
+      return run(program.forever);
+    }
+
+    return program.outputHelp((txt) => colors.red(txt));
   }
 
-  if (program.init) {
-    const init = require('../scripts/init');
-    return init();
-  }
+  return console.log(colors.red(`
+  nextd.json config file not found.
 
-  if (program.forever) {
-    const run = require('../scripts/run');
-    return run(program.forever);
-  }
+  Please following command:
 
-  return program.outputHelp((txt) => colors.red(txt));
+  $ nextd --init
+  `));
 })();

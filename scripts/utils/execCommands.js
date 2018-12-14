@@ -32,6 +32,14 @@ function Commands() {
     })
   }
 
+  this.logs = (ssh) => {
+    return this.execCommand(ssh, this.forever(`logs ${config.name}.js`)).then((result) => {
+      console.log(result.stdout);
+      console.log(result.stderr);
+    })
+  }
+
+
   this.generateIndexFile = (ssh) => {
     const file = `
       const { createServer } = require('http');
