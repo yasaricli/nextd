@@ -7,9 +7,11 @@ module.exports = (name) => {
 
     // run generic command
     return commands[name](ssh).then(() => {
-      
-      // exit.
-      return ssh.dispose();
+      return commands.list(ssh).then(() => {
+
+        // exit.
+        return ssh.dispose();
+      })
     })
   });
 }

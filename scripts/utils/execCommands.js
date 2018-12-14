@@ -1,23 +1,36 @@
 const config = require('./config');
 
-const execCommand = (ssh, command) => {
-  return ssh.execCommand(command, { cwd: config.remoteDirectory });
-}
+function Commands() {
+  this.execCommand = (ssh, command) => {
+    return ssh.execCommand(command, { cwd: config.remoteDirectory });
+  }
 
-module.exports = {
-  install(ssh) {
-    return execCommand(ssh, 'npm install && npm install forever && npm run build');
-  },
+  this.forever = (str) => {
+    return `./node_modules/forever/bin/forever ${str}`;
+  }
 
-  start(ssh) {
-    return execCommand(ssh, './node_modules/forever/bin/forever start -a index.js');
-  },
+  this.install = (ssh) => {
+    return this.execCommand(ssh, 'npm install && npm install forever && npm run build');
+  }
 
-  restartAll(ssh) {
-    return execCommand(ssh, './node_modules/forever/bin/forever restartall');
-  },
+  this.start = (ssh) => {
+    return this.execCommand(ssh, this.forever(`start --uid ${config.name} -a index.js`));
+  }
 
-  stopAll(ssh) {
-    return execCommand(ssh, './node_modules/forever/bin/forever stopall');
+  this.restart = (ssh) => {
+    return this.execCommand(ssh, this.forever('restartall'));
+  }
+
+  this.stop = (ssh) => {
+    return this.execCommand(ssh, this.forever('stopall'));
+  }
+
+  this.list = (ssh) => {
+    return this.execCommand(ssh, this.forever('list')).then((result) => {
+      console.log(result.stdout);
+      console.log(result.stderr);
+    })
   }
 }
+
+module.exports = new Commands();

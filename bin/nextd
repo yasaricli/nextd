@@ -6,8 +6,7 @@ const program = require('commander'),
 program
   .option('-d, --deploy', 'Deploys the git repository to a remote server.')
   .option('-i, --init', 'This will generate a sample, nextd.json.')
-  .option('-sa, --stopall', 'Stop all applications to a remove server.')
-  .option('-s, --start', 'Start application to a remove server.')
+  .option('-f, --forever <command>', 'Attempt to (start|restart|stopall) the program on the server using forever.', 'forever')
   .version(pack.version)
   .on('--help', function(){
     console.log('')
@@ -29,18 +28,10 @@ program
     return init();
   }
 
-  if (program.stopall) {
+  if (program.forever) {
     const run = require('../scripts/run');
-    return run('stopAll');
+    return run(program.forever);
   }
 
-  if (program.start) {
-    const run = require('../scripts/run');
-    return run('start');
-  }
-
-  // empty options
-  if (!process.argv.slice(2).length) {
-    program.outputHelp((txt) => colors.red(txt));
-  }
+  return program.outputHelp((txt) => colors.red(txt));
 })();
