@@ -27,6 +27,17 @@ Imagine the following nextd.json:
   "remoteDirectory": "/home/ubuntu/appname_dir"
 }
 ```
+
+### The deploy process
+
+Builds your app, using nextd deploy
+
+    nextd --deploy
+
+* Uploads the app bundle, the start script, and the environment variables to your servers
+* Runs the start script
+* Verifies that the app sucessfully started
+
 #### Standard options
 * **name** The application name.
 * **host** The server you want to deploy to. Has to have an SSH server with SFTP subsystem.
@@ -34,7 +45,7 @@ Imagine the following nextd.json:
 * **privateKey** The private key file for your SSH user.
 * **remoteDirectory** The absolute path on the server where you want to run the app.
 
-### Usage
+### Help
 ```bash
 Usage: nextd [options] [command]
 
@@ -47,8 +58,3 @@ Usage: nextd [options] [command]
     -V, --version        output the version number
     -f, --forever        Attempt to start/restart the program on the server using forever.
 ```
-
-### Deploy
-Deploy in a very simple way.
-    
-    nextd --deploy
