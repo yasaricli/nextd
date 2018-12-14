@@ -38,7 +38,7 @@ Builds your app, using nextd deploy
 * Runs the start script
 * Verifies that the app sucessfully started
 
-**Congratulations! Your app is now running on the server, accessible to your potential users!**
+> Congratulations! Your app is now running on the server, accessible to your potential users!
 
 #### Standard options
 * **name** The application name.
