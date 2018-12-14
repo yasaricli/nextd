@@ -6,6 +6,8 @@ const program = require('commander'),
 program
   .option('-d, --deploy', 'Deploys the git repository to a remote server.')
   .option('-i, --init', 'This will generate a sample, nextd.json.')
+  .option('-sa, --stopall', 'Stop all applications to a remove server.')
+  .option('-s, --start', 'Start application to a remove server.')
   .version(pack.version)
   .on('--help', function(){
     console.log('')
@@ -25,6 +27,16 @@ program
   if (program.init) {
     const init = require('../scripts/init');
     return init();
+  }
+
+  if (program.stopall) {
+    const run = require('../scripts/run');
+    return run('stopAll');
+  }
+
+  if (program.start) {
+    const run = require('../scripts/run');
+    return run('start');
   }
 
   // empty options

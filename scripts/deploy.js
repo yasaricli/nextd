@@ -1,13 +1,9 @@
-const path = require('path'),
-      node_ssh = require('node-ssh'),
-      _ = require('underscore');
-
 // putDirectory Option functions.
 const validate = require('./utils/validate');
       tick = require('./utils/tick');
 
-// ALL CONFIG
-const config = require('./utils/config');
+const connect = require('./utils/connect'),
+      config = require('./utils/config');
 
 // commands
 const {
@@ -18,9 +14,7 @@ const {
 } = require('./utils/execCommands');
 
 module.exports = () => {
-  const ssh = new node_ssh();
-
-  return ssh.connect(_.pick(config, ['host', 'username', 'privateKey'])).then((status) => {
+  return connect((ssh) => {
     return ssh.putDirectory(config.localDirectory, config.remoteDirectory, {
       recursive: true,
       validate,
@@ -50,5 +44,5 @@ module.exports = () => {
         })
       }
     })
-  })
+  });
 }
