@@ -47,3 +47,8 @@ Usage: nextd [options] [command]
     -V, --version        output the version number
     -f, --forever        Attempt to start/restart the program on the server using forever.
 ```
+
+### Deploy
+Deploy in a very simple way.
+    
+    nextd --deploy
