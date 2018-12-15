@@ -1,4 +1,5 @@
-const ora = require('ora');
+const ora = require('ora'),
+      colors = require('colors');
 
 // putDirectory Option functions.
 const validate = require('./utils/validate');
@@ -27,7 +28,13 @@ module.exports = () => {
       recursive: true,
       validate,
       tick(localPath, remotePath, error) {
-        spinner.text = `sending ${localPath} file`;
+
+        if (error) {
+          spinner.text = colors.red(`sending ${localPath} file`);
+          return;
+        }
+
+        spinner.text = colors.green(`sending ${localPath} file`);
       }
     }).then((status) => {
       if (status) {

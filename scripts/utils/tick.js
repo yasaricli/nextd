@@ -1,3 +1,9 @@
+const colors = require('colors');
+
 module.exports = (localPath, remotePath, error) => {
-  return console.log(localPath);
+  if (error) {
+    return console.log(colors.red(localPath));
+  }
+
+  return console.log(colors.green(localPath));
 }

@@ -14,7 +14,7 @@ function Commands() {
   }
 
   this.start = (ssh) => {
-    return this.execCommand(ssh, this.forever(`start --uid ${config.name} -a ${config.name}.js`));
+    return this.execCommand(ssh, this.forever(`start --uid ${config.name} -a server.js`));
   }
 
   this.restart = (ssh) => {
@@ -61,7 +61,7 @@ function Commands() {
       })
     `;
 
-    return ssh.execCommand(`echo -n "${file}" > ${config.name}.js`, {
+    return ssh.execCommand(`[ -f ${config.remoteDirectory}/server.js ] && echo "Server File exist" || echo -n "${file}" > server.js`, {
       cwd: config.remoteDirectory
     });
   }
