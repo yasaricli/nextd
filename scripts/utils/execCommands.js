@@ -6,7 +6,7 @@ function Commands() {
   }
 
   this.forever = (str) => {
-    return `./node_modules/forever/bin/forever ${str}`;
+    return `export NODE_ENV=production; ./node_modules/forever/bin/forever ${str}`;
   }
 
   this.install = (ssh) => {
