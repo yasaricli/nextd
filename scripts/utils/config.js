@@ -15,6 +15,7 @@ module.exports = _.defaults(shell.test('-f', nextdConfigFilePath) ?
   username: null,
   privateKey: null,
   remoteDirectory: null,
+  env: {},
   ignoreFiles: [
     ".git",
     ".gitignore",

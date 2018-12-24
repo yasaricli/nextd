@@ -1,4 +1,5 @@
 const config = require('./config');
+      _ = require('underscore');
 
 function Commands() {
   this.execCommand = (ssh, command) => {
@@ -6,7 +7,13 @@ function Commands() {
   }
 
   this.forever = (str) => {
-    return `./node_modules/forever/bin/forever ${str}`;
+    let outEnv = [];
+
+    _.each(config.env, (value, key) => {
+      outEnv.push(`export ${key}=${value}`);
+    })
+    
+    return `${outEnv.join(';')} && ./node_modules/forever/bin/forever ${str}`;
   }
 
   this.install = (ssh) => {

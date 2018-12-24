@@ -6,8 +6,8 @@ const config = require('./config');
 
 module.exports = (callback) => {
   const ssh = new node_ssh();
-
-  return ssh.connect(_.pick(config, ['host', 'username', 'privateKey'])).then(() => {
+  
+  return ssh.connect(_.pick(config, ['host', 'username', 'password', 'privateKey'])).then(() => {
     return callback(ssh);
   })
 }
