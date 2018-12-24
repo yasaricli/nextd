@@ -12,7 +12,7 @@ function Commands() {
     _.each(config.env, (value, key) => {
       outEnv.push(`export ${key}=${value}`);
     })
-    
+
     return `${outEnv.join(';')} && ./node_modules/forever/bin/forever ${str}`;
   }
 
