@@ -24,7 +24,12 @@ Imagine the following nextd.json:
   "host": "192.0.0.100",
   "username": "ubuntu",
   "privateKey": "/Users/username/Desktop/server.pem",
-  "remoteDirectory": "/home/ubuntu/appname_dir"
+  "remoteDirectory": "/home/ubuntu/appname_dir",
+  "password": "",
+  
+  "env": {
+    "API_URL": "0.0.0.0"
+  }
 }
 ```
 
